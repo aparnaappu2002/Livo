@@ -4,7 +4,6 @@ import VideoPage from "./components/VideoPage"
 import RippleEffectSection from "./components/RippleEffectSection"
 import CommunitySection from "./components/CommunitySection"
 import LivoLanding from "./components/LivoLanding"
-import LivoLast from "./components/LivoLast"
 import LivoFooter from "./components/LivoFooter"
 function App() {
 

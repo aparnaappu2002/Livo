@@ -45,17 +45,17 @@ const Hero = () => {
 
           {/* LIVO logo */}
           {/* LIVO icon + logo */}
-<div className="absolute inset-x-0 top-28 flex justify-center items-center gap-3 z-0 pointer-events-none">
+<div className="absolute inset-x-0 top-36 flex justify-center items-center gap-3 z-0 pointer-events-none">
   <img
     src={logoIcon}
     alt="Livo icon"
-    style={{ height: "80px" }}
+    style={{ height: "110px" }}
     className="object-contain select-none"
   />
   <img
     src={livoLogo}
     alt="LIVO"
-    style={{ height: "80px" }}
+    style={{ height: "110px" }}
     className="object-contain select-none"
   />
 </div>
