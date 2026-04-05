@@ -16,7 +16,6 @@ function App() {
       <RippleEffectSection/>
       <CommunitySection/>
       <LivoLanding/>
-      <LivoLast/>
       <LivoFooter/>
     </>
   )
