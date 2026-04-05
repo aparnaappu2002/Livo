@@ -147,7 +147,7 @@ const LivoPage = () => {
   ref={headingReveal.ref}
   className={`flex justify-center mb-8 transition-all duration-700 ${headingReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"}`}
 >
-  <h2 style={{ fontSize: "4rem", fontWeight: 700, textAlign: "center", margin: 0 }}>
+  <h2 style={{ fontSize: "2.2rem", fontWeight: 700, textAlign: "center", margin: 0 }}>
     Livo Makes it{" "}
     <span style={{ color: "#285A48" }}>Effortless</span>
   </h2>
