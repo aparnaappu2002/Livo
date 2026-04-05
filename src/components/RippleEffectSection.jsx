@@ -9,22 +9,7 @@ import treeLeft       from '../assets/Tree 1.png';
 import treeRight      from '../assets/Tree 2.png';
 import SavingsPage from "./SavingsProfitSection";
 
-/*
-  ══════════════════════════════════════════════════════════
-  SCROLL TIMELINE  (total: 500vh)
 
-  0.00 → 0.40   arc rises from off-screen bottom
-  0.38 → 0.55   headline fades in on the arc
-  0.52 → 0.82   arc morphs into full-screen white panel
-  0.75 → 0.92   subtitle + stats fade in on the panel (SavingsPage preview)
-  0.82 → 1.00   entire sticky layer slides UP off the screen,
-                revealing the SavingsPage that lives below in normal flow
-  ══════════════════════════════════════════════════════════
-*/
-
-/* ─────────────────────────────────────────────────────────
-   SAVINGS PAGE  (lives in normal flow, revealed by slide-up)
-───────────────────────────────────────────────────────────*/
 const SliderInput = ({ label, value, setValue, min, max, unit }) => (
   <div className="mb-6">
     <div className="flex justify-between mb-1">
