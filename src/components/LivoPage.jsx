@@ -42,7 +42,7 @@ const useReveal = () => {
 
 const TAB_CONTENT = [
   {
-    label: "Talk With Livo",
+    label: "Partner In Field",
     icon: talkIcon,
     slides: [{ img: slide1 }],
     heading: "Always With You",
