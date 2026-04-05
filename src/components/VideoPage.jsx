@@ -1,29 +1,78 @@
 import React, { useState, useRef, useEffect } from "react";
 import video1 from '../assets/Video 1.mp4'
 import video2 from '../assets/Video2.mp4'
-import video3 from '../assets/Video 3.mp4'
 import video4 from '../assets/Video 4.mp4'
 import video5 from '../assets/Video 5.mp4'
-import  headImage from '../assets/Build for Every Grower.png'
+import headImage from '../assets/Build for Every Grower.png'
 
 const VIDEOS = [
   { id: 1, title: "Farmer",        subtitle: "Make Smarter Crop Decisions With AI-Powered Insights, Climate Forecasts, And Early Pest Detection.", src: video1 },
   { id: 2, title: "Agronomist",    subtitle: "Access Advanced Field Analytics And Precision Tools Built For Professional Crop Management.", src: video2 },
-  { id: 3, title: "Home Gardener", subtitle: "Grow Healthier Plants At Home With Personalized Tips And Smart Watering Reminders.", src: video3 },
   { id: 4, title: "Researcher",    subtitle: "Leverage Real-Time Data And AI Models To Drive Agricultural Innovation Forward.", src: video4 },
   { id: 5, title: "Agri Business", subtitle: "Scale Your Operations With Market Insights And Supply Chain Optimization Tools.", src: video5 },
 ];
 
+// ── Icon components ──────────────────────────────────────────────
+const PauseIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+    <rect x="5" y="3" width="4" height="18" rx="1"/>
+    <rect x="15" y="3" width="4" height="18" rx="1"/>
+  </svg>
+);
+const PlayIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+    <polygon points="5,3 19,12 5,21"/>
+  </svg>
+);
+const MuteIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
+    <line x1="23" y1="9" x2="17" y2="15"/>
+    <line x1="17" y1="9" x2="23" y2="15"/>
+  </svg>
+);
+const UnmuteIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/>
+    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+  </svg>
+);
+
 const VideoPage = () => {
-  const [active, setActive] = useState(0);
+  const [active, setActive]   = useState(0);
+  const [paused, setPaused]   = useState(false);
+  const [muted,  setMuted]    = useState(true);
   const videoRef = useRef(null);
 
+  // When active tab changes: reload, reset controls, autoplay
   useEffect(() => {
+    setPaused(false);
+    setMuted(true);
     if (videoRef.current) {
+      videoRef.current.muted = true;
       videoRef.current.load();
       videoRef.current.play().catch(() => {});
     }
   }, [active]);
+
+  const togglePause = (e) => {
+    e.stopPropagation();
+    if (!videoRef.current) return;
+    if (paused) {
+      videoRef.current.play().catch(() => {});
+    } else {
+      videoRef.current.pause();
+    }
+    setPaused(!paused);
+  };
+
+  const toggleMute = (e) => {
+    e.stopPropagation();
+    if (!videoRef.current) return;
+    videoRef.current.muted = !muted;
+    setMuted(!muted);
+  };
 
   return (
     <div style={{ background: "#f3f4f6", minHeight: "100vh", padding: "3rem 2rem" }}>
@@ -31,16 +80,16 @@ const VideoPage = () => {
       {/* Heading */}
       <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
         <h1 style={{ fontSize: "2.2rem", fontWeight: 700, margin: 0 }}>
-          Build for <span style={{ color: "#285A48" }}>Every Grower</span>
+          World's First <span style={{ color: "#285A48" }}>Agri Companion</span>
         </h1>
         <p style={{ color: "#6b7280", marginTop: "0.5rem", fontSize: "1rem" }}>
-          From Farmers To Agronomists And Home Gardeners Etc...
+          Build For Every Grower
         </p>
       </div>
 
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
 
-        {/* Carousel — videos stay in fixed order, active expands in place */}
+        {/* Carousel */}
         <div
           style={{
             display: "flex",
@@ -56,7 +105,7 @@ const VideoPage = () => {
             return (
               <div
                 key={video.id}
-                onClick={() => setActive(i)}
+                onClick={() => !isActive && setActive(i)}
                 style={{
                   flex: isActive ? "0 0 68%" : "1 1 0",
                   minWidth: isActive ? "68%" : "80px",
@@ -74,13 +123,15 @@ const VideoPage = () => {
                     <video
                       ref={videoRef}
                       autoPlay
-                
                       loop
+                      muted
                       playsInline
                       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                     >
                       <source src={video.src} type="video/mp4" />
                     </video>
+
+                    {/* Gradient overlay */}
                     <div style={{
                       position: "absolute", bottom: 0, left: 0, right: 0,
                       padding: "2rem 1.5rem 1.5rem",
@@ -92,6 +143,64 @@ const VideoPage = () => {
                       <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "0.85rem", margin: 0, lineHeight: 1.5 }}>
                         {video.subtitle}
                       </p>
+                    </div>
+
+                    {/* ── CONTROL BUTTONS — top right ── */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 12,
+                        right: 12,
+                        display: "flex",
+                        gap: "8px",
+                        zIndex: 10,
+                      }}
+                    >
+                      {/* Pause / Play */}
+                      <button
+                        onClick={togglePause}
+                        title={paused ? "Play" : "Pause"}
+                        style={{
+                          width: 38,
+                          height: 38,
+                          borderRadius: "50%",
+                          border: "none",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          background: "rgba(0,0,0,0.45)",
+                          backdropFilter: "blur(4px)",
+                          transition: "background 0.2s",
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.background = "rgba(0,0,0,0.7)"}
+                        onMouseLeave={e => e.currentTarget.style.background = "rgba(0,0,0,0.45)"}
+                      >
+                        {paused ? <PlayIcon /> : <PauseIcon />}
+                      </button>
+
+                      {/* Mute / Unmute */}
+                      <button
+                        onClick={toggleMute}
+                        title={muted ? "Unmute" : "Mute"}
+                        style={{
+                          width: 38,
+                          height: 38,
+                          borderRadius: "50%",
+                          border: "none",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          background: "rgba(0,0,0,0.45)",
+                          backdropFilter: "blur(4px)",
+                          transition: "background 0.2s",
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.background = "rgba(0,0,0,0.7)"}
+                        onMouseLeave={e => e.currentTarget.style.background = "rgba(0,0,0,0.45)"}
+                      >
+                        {muted ? <MuteIcon /> : <UnmuteIcon />}
+                      </button>
                     </div>
                   </>
                 ) : (
@@ -129,7 +238,6 @@ const VideoPage = () => {
           gap: "2rem",
           flexWrap: "wrap",
         }}>
-          {/* Quote */}
           <div style={{ flex: "1 1 400px", display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
             <span style={{ fontSize: "3rem", color: "#285A48", lineHeight: 1, marginTop: "-0.5rem", fontFamily: "Georgia, serif" }}>"</span>
             <p style={{ color: "#374151", fontSize: "1rem", lineHeight: 1.7, margin: 0 }}>
@@ -140,7 +248,6 @@ const VideoPage = () => {
             </p>
           </div>
 
-          {/* Stats */}
           <div style={{ display: "flex", gap: "2rem", alignItems: "center", flexShrink: 0 }}>
             {[
               { value: "3500+", label: "Registered\nFarmers" },
