@@ -6,10 +6,11 @@ import video5 from '../assets/Video 5.mp4'
 import headImage from '../assets/Build for Every Grower.png'
 
 const VIDEOS = [
-  { id: 1, title: "Farmer",        subtitle: "Make Smarter Crop Decisions With AI-Powered Insights, Climate Forecasts, And Early Pest Detection.", src: video1 },
-  { id: 2, title: "Agronomist",    subtitle: "Access Advanced Field Analytics And Precision Tools Built For Professional Crop Management.", src: video2 },
-  { id: 4, title: "Researcher",    subtitle: "Leverage Real-Time Data And AI Models To Drive Agricultural Innovation Forward.", src: video4 },
-  { id: 5, title: "Agri Business", subtitle: "Scale Your Operations With Market Insights And Supply Chain Optimization Tools.", src: video5 },
+  { id: 1, title: "Farmer",    subtitle: "Madhu, Irinjalakuda.", src: video4 },
+  { id: 2, title: "Planter", subtitle: "Mini Shaju, Kalletumkara.", src: video5 },
+  { id: 3, title: "Home Grower",   subtitle: "Shaju K L, Thrissur.", src: video1 },
+  { id: 4, title: "Agronomist",    subtitle: "Suresh, Ex professor, Kaipamangalam.", src: video2 },
+
 ];
 
 // ── Icon components ──────────────────────────────────────────────
