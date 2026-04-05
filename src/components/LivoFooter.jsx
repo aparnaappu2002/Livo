@@ -141,10 +141,10 @@ export default function LivoFooter() {
                 style={{ height: 56 }}
               />
               <p className="text-sm leading-snug text-gray-500 mb-6">
-                Smarter Farming<br />Starts Here
+                Your Agri Companion
               </p>
               <div className="flex gap-3 flex-wrap justify-center">
-                <a href="#" className="hover:scale-105 transition-transform duration-200">
+                <a href="https://play.google.com/store/apps/details?id=com.revin.livo" className="hover:scale-105 transition-transform duration-200">
                   <img
                     src={appStoreBadge}
                     alt="App Store"
@@ -152,7 +152,7 @@ export default function LivoFooter() {
                     style={{ filter: "invert(1)" }}   /* white badge → dark on white bg */
                   />
                 </a>
-                <a href="#" className="hover:scale-105 transition-transform duration-200">
+                <a href="https://play.google.com/store/apps/details?id=com.revin.livo" className="hover:scale-105 transition-transform duration-200">
                   <img
                     src={playStoreBadge}
                     alt="Play Store"
