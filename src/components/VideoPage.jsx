@@ -80,7 +80,7 @@ const VideoPage = () => {
       {/* Heading */}
       <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
         <h1 style={{ fontSize: "2.2rem", fontWeight: 700, margin: 0 }}>
-          World's First <span style={{ color: "#285A48" }}>Agri Companion</span>
+          World's 1st <span style={{ color: "#285A48" }}>Agri Companion</span>
         </h1>
         <p style={{ color: "#6b7280", marginTop: "0.5rem", fontSize: "1rem" }}>
           Build For Every Grower
