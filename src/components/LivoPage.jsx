@@ -144,11 +144,14 @@ const LivoPage = () => {
 
       {/* Heading */}
       <div
-        ref={headingReveal.ref}
-        className={`flex justify-center mb-8 transition-all duration-700 ${headingReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"}`}
-      >
-        <img src={headingImage} alt="Livo Makes it Effortless" className="max-w-xs sm:max-w-sm md:max-w-lg object-contain" />
-      </div>
+  ref={headingReveal.ref}
+  className={`flex justify-center mb-8 transition-all duration-700 ${headingReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"}`}
+>
+  <h2 style={{ fontSize: "4rem", fontWeight: 700, textAlign: "center", margin: 0 }}>
+    Livo Makes it{" "}
+    <span style={{ color: "#285A48" }}>Effortless</span>
+  </h2>
+</div>
 
       {/* ── Constrained wrapper — tabs + card share same width ── */}
       <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
