@@ -24,37 +24,42 @@ export default function LivoLanding() {
     <div className="min-h-screen bg-[#f0f7f4] flex items-center justify-center p-6 font-sans">
       <div
         className={`
-          relative max-w-5xl w-full bg-white rounded-3xl border-4 border-black
+          relative w-full bg-white rounded-3xl border-4 border-black
           shadow-[0_8px_40px_rgba(26,92,71,0.10)]
-          transition-all duration-700 ease-out
+          transition-all duration-700 ease-out overflow-hidden
           ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
         `}
+        style={{ maxWidth: "1200px" }}
       >
-        {/* Subtle background accent */}
+        <div className="relative flex flex-col lg:flex-row items-stretch gap-0 px-16 pt-14 pb-0">
 
-        <div className="relative flex flex-col lg:flex-row items-center gap-0 px-10 pt-12 pb-8 lg:pb-0">
           {/* LEFT CONTENT */}
-          <div className="flex-1 z-10">
+          <div className="flex-1 z-10 pb-12">
+
             {/* Headline */}
             <h1
               className={`
-                text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight mb-3 tracking-tight
+                font-bold leading-tight mb-4 tracking-tight text-gray-900
                 transition-all duration-700 delay-100
                 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
               `}
-              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+              style={{
+                fontFamily: "Inter, system-ui, sans-serif",
+                fontSize: "clamp(1.6rem, 2.8vw, 2.8rem)",
+                whiteSpace: "nowrap",
+              }}
             >
-              Understand Your Crop<br />
-              <span className="text-[#1a5c47]">Like Never Before</span>
+              Understand Your Crop Like Never Before
             </h1>
 
             {/* Subtitle */}
             <p
               className={`
-                text-gray-400 text-lg mb-2 font-light tracking-wide
+                text-gray-400 font-light tracking-wide mb-3
                 transition-all duration-700 delay-150
                 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
               `}
+              style={{ fontSize: "clamp(1rem, 1.4vw, 1.2rem)" }}
             >
               Your partner that farms with you.
             </p>
@@ -62,20 +67,20 @@ export default function LivoLanding() {
             {/* CTA text */}
             <p
               className={`
-                text-gray-900 text-base font-semibold mb-6
+                font-semibold mb-8
                 transition-all duration-700 delay-200
                 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
               `}
+              style={{ fontSize: "clamp(1rem, 1.3vw, 1.15rem)", color: "#111827" }}
             >
               Get your{" "}
-              <span className="text-[#2aab7e] font-bold">livo</span>{" "}
-              <span className="text-[#2aab7e] font-bold">now</span>
+              <span style={{ color: "#2aab7e", fontWeight: 700 }}>livo now</span>
             </p>
 
             {/* App store badges */}
             <div
               className={`
-                flex gap-4 mb-8 flex-wrap
+                flex gap-4 mb-10
                 transition-all duration-700 delay-300
                 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
               `}
@@ -84,81 +89,91 @@ export default function LivoLanding() {
                 <img
                   src={appStoreBadge}
                   alt="Download on the App Store"
-                  className="h-14 rounded-xl shadow-md"
+                  className="rounded-xl shadow-md"
+                  style={{ height: "56px", width: "auto" }}
                 />
               </a>
               <a href="#" className="hover:scale-105 transition-transform duration-200">
                 <img
                   src={playStoreBadge}
                   alt="Get it on Play Store"
-                  className="h-14 rounded-xl shadow-md"
+                  className="rounded-xl shadow-md"
+                  style={{ height: "56px", width: "auto" }}
                 />
               </a>
             </div>
 
             {/* Feature bullets */}
-            <ul className="space-y-3 mb-10">
+            <ul className="space-y-4">
               {features.map((feat, i) => (
                 <li
                   key={feat}
                   className={`
-                    flex items-center gap-3 text-gray-700 text-base font-medium
+                    flex items-center gap-4 text-gray-700 font-medium
                     transition-all duration-700
                     ${visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}
                   `}
-                  style={{ transitionDelay: `${400 + i * 80}ms` }}
+                  style={{
+                    transitionDelay: `${400 + i * 80}ms`,
+                    fontSize: "clamp(0.95rem, 1.2vw, 1.05rem)",
+                  }}
                 >
-                  <img src={bulletIcon} alt="" className="w-5 h-5 shrink-0" />
+                  <img src={bulletIcon} alt="" className="shrink-0" style={{ width: 22, height: 22 }} />
                   {feat}
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* RIGHT — Illustration + Device */}
+          {/* RIGHT — illustration shifted left, device overlaps right edge */}
           <div
             className={`
-              relative shrink-0 w-full lg:w-115 flex items-end justify-center
+              relative shrink-0 flex items-end justify-start
               transition-all duration-700 delay-200
               ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
             `}
-            style={{ marginBottom: "-4px", marginLeft: "-30px" }}
+            style={{
+              width: "clamp(260px, 40%, 460px)",
+              /* Negative margin pulls the whole column leftward */
+              marginLeft: "clamp(-60px, -4vw, -20px)",
+              /* Positive padding-right makes space for the device outside */
+              paddingRight: "clamp(60px, 6vw, 90px)",
+            }}
           >
-            {/* Main illustration — overflows below card border */}
+            {/* Hero illustration — fills the column */}
             <img
               src={heroIllustration}
               alt="Farmer using Livo app"
-              className="w-full max-w-sm lg:max-w-none lg:w-105 object-contain drop-shadow-xl"
-              style={{ marginBottom: "-70px" }}
+              style={{
+                width: "100%",
+                height: "auto",
+                display: "block",
+                objectFit: "contain",
+              }}
             />
 
-            {/* Livo device — overlaid top right */}
+            {/* Device — anchored to top-right, never clipped */}
             <div
-              className="absolute top-4 right-0"
-              style={{ width: 80 }}
+              className={`
+                absolute top-4 right-0
+                transition-all duration-700 delay-500
+                ${visible ? "opacity-100 scale-100" : "opacity-0 scale-90"}
+              `}
+              style={{ width: "clamp(52px, 5.5vw, 80px)" }}
             >
               <img
                 src={livoDevice}
                 alt="Livo device"
-                className={`
-                  w-full drop-shadow-2xl
-                  transition-all duration-700 delay-500
-                  ${visible ? "opacity-100 scale-100" : "opacity-0 scale-90"}
-                `}
+                className="w-full drop-shadow-2xl"
               />
-              {/* <span className="block text-center text-[9px] text-gray-400 mt-1 font-mono tracking-widest uppercase">
-                75 × 150
-              </span> */}
             </div>
           </div>
-        </div>
 
-        {/* Bottom accent bar */}
+        </div>
       </div>
 
-      {/* Google Fonts */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
       `}</style>
     </div>
   );
