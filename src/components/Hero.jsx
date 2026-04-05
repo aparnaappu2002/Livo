@@ -49,7 +49,7 @@ const Hero = () => {
   <img
     src={logoIcon}
     alt="Livo icon"
-    style={{ height: "110px" }}
+    style={{ height: "150px" }}
     className="object-contain select-none"
   />
   <img
