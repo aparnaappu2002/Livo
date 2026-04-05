@@ -44,14 +44,21 @@ const Hero = () => {
         <div className="relative h-170 overflow-hidden">
 
           {/* LIVO logo */}
-          <div className="absolute inset-x-0 top-28 flex justify-center z-0 pointer-events-none">
-            <img
-              src={livoLogo}
-              alt="LIVO"
-              style={{ height: "80px" }}
-              className="object-contain select-none"
-            />
-          </div>
+          {/* LIVO icon + logo */}
+<div className="absolute inset-x-0 top-28 flex justify-center items-center gap-3 z-0 pointer-events-none">
+  <img
+    src={logoIcon}
+    alt="Livo icon"
+    style={{ height: "80px" }}
+    className="object-contain select-none"
+  />
+  <img
+    src={livoLogo}
+    alt="LIVO"
+    style={{ height: "80px" }}
+    className="object-contain select-none"
+  />
+</div>
 
           {/* Wheat plants */}
           <div className="absolute bottom-0 left-0 flex items-end z-10">
