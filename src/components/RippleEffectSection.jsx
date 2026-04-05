@@ -6,7 +6,7 @@ import newFarmFriends from '../assets/FarmFriends2.png';
 import statsImage     from '../assets/Frame 2147211065.png';
 import groundBg       from '../assets/image 1175.png';
 import treeLeft       from '../assets/Tree 1.png';
-import treeRight      from '../assets/Tree 2.png';
+import treeRight      from '../assets/Tree 1.png';
 import SavingsPage from "./SavingsProfitSection";
 
 
