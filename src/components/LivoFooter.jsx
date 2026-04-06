@@ -43,7 +43,8 @@ export default function LivoFooter() {
       <div
         className="absolute left-1/2 z-30"
         style={{
-          top: -56,
+          top: -90,
+          left:"52%",
           transform: `translateX(-50%) translateY(${revealed ? "0px" : "18px"}) scale(${revealed ? 1 : 0.88})`,
           opacity: revealed ? 1 : 0,
           transition: "transform 0.7s ease-out 100ms, opacity 0.7s ease-out 100ms",
@@ -52,7 +53,7 @@ export default function LivoFooter() {
         <img
           src={mascot}
           alt="Livo mascot"
-          className="w-28 h-28 object-contain drop-shadow-xl"
+          className="w-34 h-34 object-contain drop-shadow-xl"
         />
       </div>
 
