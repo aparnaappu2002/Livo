@@ -31,8 +31,7 @@ export default function LivoLanding() {
         `}
         style={{ maxWidth: "1200px" }}
       >
-        <div className="relative flex flex-col lg:flex-row items-stretch gap-0 px-16 pt-14 pb-0">
-
+<div className="relative flex flex-col lg:flex-row items-stretch gap-0 px-16 pt-14 pb-0">
           {/* LEFT CONTENT */}
           <div className="flex-1 z-10 pb-12">
 
@@ -126,48 +125,47 @@ export default function LivoLanding() {
           </div>
 
           {/* RIGHT — illustration shifted left, device overlaps right edge */}
-          <div
-            className={`
-              relative shrink-0 flex items-end justify-start
-              transition-all duration-700 delay-200
-              ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
-            `}
-            style={{
-              width: "clamp(260px, 40%, 460px)",
-              /* Negative margin pulls the whole column leftward */
-              marginLeft: "clamp(-60px, -4vw, -20px)",
-              /* Positive padding-right makes space for the device outside */
-              paddingRight: "clamp(60px, 6vw, 90px)",
-            }}
-          >
-            {/* Hero illustration — fills the column */}
-            <img
-              src={heroIllustration}
-              alt="Farmer using Livo app"
-              style={{
-                width: "100%",
-                height: "auto",
-                display: "block",
-                objectFit: "contain",
-              }}
-            />
+          {/* RIGHT — illustration fully visible, bottom-aligned */}
+              {/* RIGHT — absolutely positioned so full image is always visible */}
+<div style={{ width: "clamp(320px, 42%, 500px)", flexShrink: 0 }} />
 
-            {/* Device — anchored to top-right, never clipped */}
-            <div
-              className={`
-                absolute top-4 right-0
-                transition-all duration-700 delay-500
-                ${visible ? "opacity-100 scale-100" : "opacity-0 scale-90"}
-              `}
-              style={{ width: "clamp(52px, 5.5vw, 80px)" }}
-            >
-              <img
-                src={livoDevice}
-                alt="Livo device"
-                className="w-full drop-shadow-2xl"
-              />
-            </div>
-          </div>
+{/* Full illustration — positioned absolute to the card */}
+{/* Full illustration — positioned absolute to the card */}
+<img
+  src={heroIllustration}
+  alt="Farmer using Livo app"
+  className={`
+    absolute bottom-0
+    transition-all duration-700 delay-200
+    ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
+  `}
+  style={{
+    height: "100%",
+    width: "auto",
+    objectFit: "contain",
+    objectPosition: "bottom right",
+    maxHeight: "420px",
+    right: "80px",   // ← shift left away from edge
+  }}
+/>
+
+{/* Device/scroll — positioned top-right of the card */}
+<img
+  src={livoDevice}
+  alt="Livo device"
+  className={`
+    absolute drop-shadow-2xl
+    transition-all duration-700 delay-500
+    ${visible ? "opacity-100 scale-100" : "opacity-0 scale-90"}
+  `}
+  style={{
+    width: "50px",     // ← much smaller
+    height: "auto",
+    zIndex: 10,
+    top: "100px",    // ← align vertically with figures
+    right: "16px",     // ← stick to right edge
+  }}
+/>
 
         </div>
       </div>
