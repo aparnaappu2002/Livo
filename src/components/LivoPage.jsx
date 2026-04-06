@@ -74,9 +74,9 @@ const TAB_CONTENT = [
     heading: "Stay Ahead of Weather",
     description: "No matter how the climate shifts, Livo prepares you early-helping you protect your crop and secure your income.",
     steps: [
-      { title: "Get Alerts",  img: cropDiagnosis2 },
+      { title: "Get Alerts",       img: cropDiagnosis2 },
       { title: "Check Conditions", img: cropDiagnosis4 },
-      { title: "Protect Crop", img: cropDiagnosis1 },
+      { title: "Protect Crop",     img: cropDiagnosis1 },
     ],
     cta: "Try Now →",
   },
@@ -87,9 +87,9 @@ const TAB_CONTENT = [
     heading: "Your Plant's Health Guide",
     description: "From uncertainty to clarity-Livo delivers the right treatment, precise dose, and clear action-leaving nothing to hope.",
     steps: [
-      { title: "Scan The Plant",    img: climatePrediction3 },
-      { title: "Detect Issue",    img: climatePrediction2 },
-      { title: "Get Treatment", img: climatePrediction1 },
+      { title: "Scan The Plant", img: climatePrediction3 },
+      { title: "Detect Issue",   img: climatePrediction2 },
+      { title: "Get Treatment",  img: climatePrediction1 },
     ],
     cta: "Scan Now →",
   },
@@ -100,9 +100,9 @@ const TAB_CONTENT = [
     heading: "Plan Every Step Right",
     description: "From sowing to harvest, Livo organizes your actions so you never miss the right step at the right time.",
     steps: [
-      { title: "Act Right",     img: ActionPlanning3 },
-      { title: "Track Progress",   img: ActionPlanning1 },
-      { title: "Save More", img: ActionPlanning2 },
+      { title: "Act Right",      img: ActionPlanning3 },
+      { title: "Track Progress", img: ActionPlanning1 },
+      { title: "Save More",      img: ActionPlanning2 },
     ],
     cta: "Track Now →",
   },
@@ -118,10 +118,33 @@ const Carousel = ({ slides }) => {
   }, [slides]);
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100%", borderRadius: "1rem", overflow: "hidden" }}>
+    <div style={{
+      position: "relative",
+      width: "100%",
+      height: "100%",
+      borderRadius: "1rem",
+      overflow: "hidden",
+    }}>
       {slides.map((slide, i) => (
-        <div key={i} style={{ position: "absolute", inset: 0, opacity: i === current ? 1 : 0, transition: "opacity 0.7s ease" }}>
-          <img src={slide.img} alt={`Slide ${i + 1}`} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+        <div
+          key={i}
+          style={{
+            position: "absolute",
+            inset: 0,
+            opacity: i === current ? 1 : 0,
+            transition: "opacity 0.7s ease",
+          }}
+        >
+          <img
+            src={slide.img}
+            alt={`Slide ${i + 1}`}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              display: "block",
+            }}
+          />
         </div>
       ))}
     </div>
@@ -144,26 +167,28 @@ const LivoPage = () => {
 
       {/* Heading */}
       <div
-  ref={headingReveal.ref}
-  className={`flex justify-center mb-8 transition-all duration-700 ${headingReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"}`}
->
-  <h2 style={{ fontSize: "2.2rem", fontWeight: 700, textAlign: "center", margin: 0 }}>
-    Livo Makes it{" "}
-    <span style={{ color: "#285A48" }}>Effortless</span>
-  </h2>
-</div>
+        ref={headingReveal.ref}
+        className={`flex justify-center mb-8 transition-all duration-700 ${
+          headingReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
+        }`}
+      >
+        <h2 style={{ fontSize: "2.2rem", fontWeight: 700, textAlign: "center", margin: 0 }}>
+          Livo Makes it{" "}
+          <span style={{ color: "#285A48" }}>Effortless</span>
+        </h2>
+      </div>
 
-      {/* ── Constrained wrapper — tabs + card share same width ── */}
+      {/* Constrained wrapper */}
       <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
 
-        {/* Tabs — single row, no wrap, smaller padding so all fit */}
+        {/* Tabs */}
         <div
           style={{
             display: "flex",
-            flexWrap: "nowrap",        /* force single line */
+            flexWrap: "nowrap",
             gap: "12px",
             justifyContent: "center",
-            overflowX: "auto",         /* scroll on very small screens */
+            overflowX: "auto",
             paddingBottom: "4px",
           }}
         >
@@ -179,12 +204,12 @@ const LivoPage = () => {
                 borderRadius: "14px",
                 fontSize: "0.92rem",
                 fontWeight: 500,
-                whiteSpace: "nowrap",   /* never break label */
+                whiteSpace: "nowrap",
                 cursor: "pointer",
                 border: "none",
                 transition: "all 0.2s",
                 flexShrink: 0,
-                background: activeTab === index ? "#285A48" : "#DDE5E2 ",
+                background: activeTab === index ? "#285A48" : "#DDE5E2",
                 color: activeTab === index ? "white" : "#6b7280",
                 boxShadow: activeTab === index ? "0 2px 8px rgba(40,90,72,0.25)" : "none",
               }}
@@ -193,7 +218,8 @@ const LivoPage = () => {
                 src={tab.icon}
                 alt={tab.label}
                 style={{
-                  width: 20, height: 20,
+                  width: 20,
+                  height: 20,
                   objectFit: "contain",
                   filter: activeTab === index ? "brightness(0) invert(1)" : "opacity(0.5)",
                 }}
@@ -203,25 +229,30 @@ const LivoPage = () => {
           ))}
         </div>
 
-        {/* Card — same width as the tab row above */}
+        {/* Card */}
         <div
           style={{
             background: "white",
             borderRadius: "1.5rem",
             boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-            padding: "1.75rem",
+            padding: "1rem",
             marginTop: "1rem",
             display: "flex",
             flexDirection: "row",
-            alignItems: "stretch",
-            minHeight: "460px",
+            alignItems: "center",
+            minHeight: "440px",
             transition: "opacity 0.5s ease, transform 0.5s ease",
             opacity: show ? 1 : 0,
             transform: show ? "translateY(0)" : "translateY(1rem)",
           }}
         >
           {/* LEFT — image */}
-          <div style={{ width: "55%", flexShrink: 0, minHeight: "420px" }}>
+          <div style={{
+            width: "55%",
+            flexShrink: 0,
+            height: "420px",
+            padding: "0.25rem",
+          }}>
             <Carousel slides={content.slides} />
           </div>
 
@@ -234,53 +265,119 @@ const LivoPage = () => {
               justifyContent: "center",
               alignItems: "center",
               textAlign: "center",
-              padding: "1.5rem 2rem",
-              gap: "1rem",
+              padding: "1rem 1.25rem",
+              gap: "1.75rem",
             }}
           >
-            <h2 style={{ fontSize: "1.9rem", fontWeight: 700, margin: 0, lineHeight: 1.2 }}>
+            <h2 style={{
+              fontSize: "1.9rem",
+              fontWeight: 700,
+              margin: 0,
+              lineHeight: 1.2,
+            }}>
               {content.heading.split(" ").slice(0, -2).join(" ")}{" "}
-              <span style={{ color: "#285A48" }}>{content.heading.split(" ").slice(-2).join(" ")}</span>
+              <span style={{ color: "#285A48" }}>
+                {content.heading.split(" ").slice(-2).join(" ")}
+              </span>
             </h2>
 
-            <p style={{ color: "#6b7280", maxWidth: "26rem", fontSize: "0.95rem", lineHeight: 1.6, margin: 0 }}>
+            <p style={{
+              color: "#6b7280",
+              maxWidth: "26rem",
+              fontSize: "0.95rem",
+              lineHeight: 1.6,
+              margin: 0,
+            }}>
               "{content.description}"
             </p>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            {/* Steps */}
+            <div style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "1.6rem",
+            }}>
               {content.steps.map((step, index) => (
                 <React.Fragment key={index}>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.6rem" }}>
+                  <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "0.9rem",
+                    width: "80px",
+                  }}>
                     <div
                       style={{
-                        background: "#285A48", width: 68, height: 68, borderRadius: "50%",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        boxShadow: "0 4px 12px rgba(40,90,72,0.25)", cursor: "pointer", transition: "transform 0.2s",
+                        background: "#285A48",
+                        width: 68,
+                        height: 68,
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        boxShadow: "0 4px 12px rgba(40,90,72,0.25)",
+                        cursor: "pointer",
+                        transition: "transform 0.2s",
+                        flexShrink: 0,
                       }}
                       onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
                       onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
                     >
-                      <img src={step.img} alt={step.title} style={{ width: 60, height: 60, objectFit: "contain" }} />
+                      <img
+                        src={step.img}
+                        alt={step.title}
+                        style={{ width: 60, height: 60, objectFit: "contain" }}
+                      />
                     </div>
-                    <p style={{ fontSize: "0.78rem", color: "#4b5563", fontWeight: 500, lineHeight: 1.3, margin: 0 }}>
-                      {step.title.split(" ").map((word, i) => <span key={i} style={{ display: "block" }}>{word}</span>)}
+                    <p style={{
+                      fontSize: "0.78rem",
+                      color: "#4b5563",
+                      fontWeight: 500,
+                      lineHeight: 1.3,
+                      margin: 0,
+                      width: "100%",
+                      textAlign: "center",
+                    }}>
+                      {step.title}
                     </p>
                   </div>
+
                   {index < content.steps.length - 1 && (
-                    <span style={{ color: "#9ca3af", fontSize: "1.1rem", fontWeight: 700, marginBottom: "1.5rem" }}>»</span>
+                    <span style={{
+                      color: "#9ca3af",
+                      fontSize: "1.1rem",
+                      fontWeight: 700,
+                      marginTop: "20px",
+                      flexShrink: 0,
+                    }}>
+                      »
+                    </span>
                   )}
                 </React.Fragment>
               ))}
             </div>
 
+            {/* CTA Button */}
             <button
               style={{
-                border: "2px solid #15803d", color: "#15803d", background: "transparent",
-                padding: "0.65rem 2rem", borderRadius: "9999px", fontSize: "0.95rem",
-                fontWeight: 600, cursor: "pointer", transition: "background 0.2s, color 0.2s",
+                border: "2px solid #15803d",
+                color: "#15803d",
+                background: "transparent",
+                padding: "0.65rem 2rem",
+                borderRadius: "9999px",
+                fontSize: "0.95rem",
+                fontWeight: 600,
+                cursor: "pointer",
+                transition: "background 0.2s, color 0.2s",
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#15803d"; e.currentTarget.style.color = "white"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#15803d"; }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = "#15803d";
+                e.currentTarget.style.color = "white";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.color = "#15803d";
+              }}
             >
               {content.cta}
             </button>
