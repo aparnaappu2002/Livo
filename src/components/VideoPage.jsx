@@ -6,11 +6,22 @@ import video5 from '../assets/Video 5.mp4'
 import headImage from '../assets/Build for Every Grower.png'
 
 const VIDEOS = [
-  { id: 1, title: "Farmer",    subtitle: "Madhu, Irinjalakuda.", src: video4 },
-  { id: 2, title: "Planter", subtitle: "Mini Shaju, Kalletumkara.", src: video5 },
-  { id: 3, title: "Home Grower",   subtitle: "Shaju K L, Thrissur.", src: video1 },
-  { id: 4, title: "Agronomist",    subtitle: "Suresh, Ex professor, Kaipamangalam.", src: video2 },
-
+  { 
+    id: 1, title: "Farmer", subtitle: "Madhu, Irinjalakuda.", src: video4,
+    quote: "Livo helped me understand my soil better than ever. My yield increased by 40% this season and I finally feel confident about every decision I make on my farm."
+  },
+  { 
+    id: 2, title: "Planter", subtitle: "Mini Shaju, Kalletumkara.", src: video5,
+    quote: "As a planter, timing is everything. Livo's climate alerts and crop suggestions have saved my plants from disease multiple times. I can't imagine farming without it now."
+  },
+  { 
+    id: 3, title: "Home Grower", subtitle: "Shaju K L, Thrissur.", src: video1,
+    quote: "I grow vegetables at home and always struggled with pest problems. Livo's diagnosis feature identified the issue instantly and gave me the exact treatment. It's like having an expert always available."
+  },
+  { 
+    id: 4, title: "Agronomist", subtitle: "Suresh, Ex professor, Kaipamangalam.", src: video2,
+    quote: "From an agronomist's perspective, Livo brings scientific precision to every farmer's hand. The recommendations are accurate, timely, and genuinely make a difference in the field."
+  },
 ];
 
 // ── Icon components ──────────────────────────────────────────────
@@ -242,10 +253,8 @@ const VideoPage = () => {
           <div style={{ flex: "1 1 400px", display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
             <span style={{ fontSize: "3rem", color: "#285A48", lineHeight: 1, marginTop: "-0.5rem", fontFamily: "Georgia, serif" }}>"</span>
             <p style={{ color: "#374151", fontSize: "1rem", lineHeight: 1.7, margin: 0 }}>
-              <span style={{ fontSize: "1.4rem", fontWeight: 700, float: "left", marginRight: "2px", lineHeight: 1 }}>
-                {VIDEOS[active].subtitle.charAt(0)}
-              </span>
-              {VIDEOS[active].subtitle.slice(1)}
+              
+              {VIDEOS[active].quote}
             </p>
           </div>
 
