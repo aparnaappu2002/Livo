@@ -101,25 +101,21 @@ const CommunitySection = () => {
         </div>
 
         <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          style={{ opacity: 1, zIndex: 20 }}
-        >
-          <h2
-            className="text-community-heading"
-            style={{
-              fontFamily: "'Georgia', serif",
-              fontSize: "clamp(2.5rem, 5.5vw, 5rem)",
-              fontWeight: 700,
-              letterSpacing: "-0.02em",
-              lineHeight: 1,
-              textAlign: "center",
-              margin: 0,
-              padding: "0 1rem",
-            }}
-          >
-            Our Community
-          </h2>
-        </motion.div>
+  className="absolute inset-0 flex items-center justify-center pointer-events-none"
+  style={{ opacity: 1, zIndex: 20 }}
+>
+  <h2
+    style={{
+      fontSize: "2.2rem",
+      fontWeight: 700,
+      textAlign: "center",
+      margin: 0,
+    }}
+  >
+    Our{" "}
+    <span style={{ color: "#285A48" }}>Community</span>
+  </h2>
+</motion.div>
       </div>
     </div>
   );
