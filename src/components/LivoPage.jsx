@@ -70,28 +70,28 @@ const TAB_CONTENT = [
   {
     label: "Climate Prediction",
     icon: climateIcon,
-    slides: [{ img: climatePrediction4 }],
+    slides: [{ img: cropDiagnosis3 }],
     heading: "Stay Ahead of Weather",
-    description: "Get hyper-local weather forecasts and rain alerts so you can plan irrigation, spraying, and harvests perfectly.",
+    description: "No matter how the climate shifts, Livo prepares you early-helping you protect your crop and secure your income.",
     steps: [
-      { title: "Scan The Plant",  img: climatePrediction3 },
-      { title: "Detect Issue", img: climatePrediction2 },
-      { title: "Get Treatment", img: climatePrediction1 },
+      { title: "Get Alerts",  img: cropDiagnosis2 },
+      { title: "Check Conditions", img: cropDiagnosis4 },
+      { title: "Protect Crop", img: cropDiagnosis1 },
     ],
-    cta: "Scan Now →",
+    cta: "Try Now →",
   },
   {
     label: "Crop Diagnosis",
     icon: diagnosisIcon,
-    slides: [{ img: cropDiagnosis3 }],
-    heading: "Stay Ahead Of Weather",
-    description: "Just snap a photo of your crop. Livo's AI instantly identifies diseases, pests, and deficiencies—and tells you exactly what to do.",
+    slides: [{ img: climatePrediction4 }],
+    heading: "Your Plant's Health Guide",
+    description: "From uncertainty to clarity-Livo delivers the right treatment, precise dose, and clear action-leaving nothing to hope.",
     steps: [
-      { title: "Get Alerts",    img: cropDiagnosis2 },
-      { title: "Check Conditions",    img: cropDiagnosis4 },
-      { title: "Protect Crop", img: cropDiagnosis1 },
+      { title: "Scan The Plant",    img: climatePrediction3 },
+      { title: "Detect Issue",    img: climatePrediction2 },
+      { title: "Get Treatment", img: climatePrediction1 },
     ],
-    cta: "Try Now →",
+    cta: "Scan Now →",
   },
   {
     label: "Note Your Activities",
@@ -260,7 +260,7 @@ const LivoPage = () => {
                       onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
                       onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
                     >
-                      <img src={step.img} alt={step.title} style={{ width: 34, height: 34, objectFit: "contain" }} />
+                      <img src={step.img} alt={step.title} style={{ width: 60, height: 60, objectFit: "contain" }} />
                     </div>
                     <p style={{ fontSize: "0.78rem", color: "#4b5563", fontWeight: 500, lineHeight: 1.3, margin: 0 }}>
                       {step.title.split(" ").map((word, i) => <span key={i} style={{ display: "block" }}>{word}</span>)}
