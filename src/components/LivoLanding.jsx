@@ -60,7 +60,7 @@ export default function LivoLanding() {
               `}
               style={{ fontSize: "clamp(1rem, 1.4vw, 1.2rem)" }}
             >
-              With your partners that farms with you
+              With your partner that farms with you
             </p>
 
             {/* CTA text */}
