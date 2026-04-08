@@ -163,6 +163,9 @@ const Hero = () => {
       justifyContent: "center",
       gap: "12px",
       marginTop: "16px",
+      position:"relative",
+      zIndex:50,
+      pointerEvents:'auto'
     }}
   >
     <a href="https://apps.apple.com" target="_blank" rel="noopener noreferrer" className="hover:scale-105 transition">
@@ -223,14 +226,7 @@ const Hero = () => {
             <img src={green} alt="green" className="w-full" />
             <div className="relative">
               <img src={brown} alt="soil" className="w-full" style={{ maxHeight: "80px", objectFit: "cover" }} />
-              {/* <div className="absolute inset-0 flex items-center justify-center gap-4">
-                <a href="https://apps.apple.com" target="_blank" rel="noopener noreferrer" className="hover:scale-105 transition">
-                  <img src={whiteApple} alt="App Store" className="h-10 object-contain" />
-                </a>
-                <a href="https://play.google.com/store/apps/details?id=com.revin.livo" target="_blank" rel="noopener noreferrer" className="hover:scale-105 transition">
-                  <img src={whitePlaystore} alt="Play Store" className="h-10 object-contain" />
-                </a>
-              </div> */}
+              
             </div>
           </div>
 
