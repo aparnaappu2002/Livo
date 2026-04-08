@@ -13,6 +13,7 @@ import wheat from '../assets/wheat.png'
 import fadewheat from '../assets/Frame 2147211020.png'
 import chilli from '../assets/Frame 2147210967.png'
 import fadechilli from '../assets/Frame 2147210977.png'
+import revinLogo from '../assets/logo 2.png'
 
 /* ── Wave: each letter bobs up/down with a staggered delay ── */
 const WaveText = ({ text, isActive }) => {
@@ -136,7 +137,11 @@ const Hero = () => {
                     whiteSpace:    "nowrap",
                   }}
                 >
-                  <WaveText text="Your Fields Companion" isActive={phase === "text"} />
+                  <WaveText text="INDIA'S #1 " isActive={phase === "text"} />
+                  <span style={{ color: "#000000" }}>
+                  <WaveText text="AGRI PARTNER" isActive={phase === "text"} />
+                  </span>
+
                 </p>
 
                 {/* Sub-line also waves, slightly delayed overall */}
@@ -150,7 +155,33 @@ const Hero = () => {
                     whiteSpace:    "nowrap",
                   }}
                 >
-                  <WaveText text="Track. Grow. Profit." isActive={phase === "text"} />
+                  {/* Sub-line */}
+{/* Sub-line also waves, slightly delayed overall */}
+<div
+  style={{
+    fontSize:      "clamp(15px, 1.9vw, 24px)",
+    fontWeight:    500,
+    color:         "#4b7c6f",
+    marginTop:     "10px",
+    letterSpacing: "1px",
+    whiteSpace:    "nowrap",
+    display:       "flex",
+    alignItems:    "center",
+    justifyContent: "center",
+    gap:           "8px",
+  }}
+>
+  <WaveText text="Powered By " isActive={phase === "text"} />
+  <img
+    src={revinLogo}
+    alt="Revin"
+    style={{
+      height: "clamp(18px, 2.2vw, 30px)",
+      objectFit: "contain",
+      display: "inline-block",
+    }}
+  />
+</div>
                 </p>
               </div>
 
