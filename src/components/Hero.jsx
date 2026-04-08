@@ -237,7 +237,7 @@ const Hero = () => {
             style={{
               height: "clamp(200px, 42vh, 480px)",
               width: "auto",
-              bottom: "calc(100% - 680px - 50px)",
+              bottom: "calc(100% - 680px - 80px)",
             }}
           />
         </div>
