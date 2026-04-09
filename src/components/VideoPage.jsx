@@ -68,13 +68,11 @@ const VideoPage = () => {
   const [muted,  setMuted]  = useState(true);
   const isMobile = useIsMobile();
 
-  // One ref per video so we can mute the previous one explicitly
   const videoRefs = useRef(VIDEOS.map(() => React.createRef()));
   const prevActive = useRef(0);
 
   const getActiveRef = () => videoRefs.current[active]?.current;
 
-  // When active changes: mute+pause previous, play+mute-reset new
   useEffect(() => {
     const prev = videoRefs.current[prevActive.current]?.current;
     if (prev) {
@@ -122,7 +120,6 @@ const VideoPage = () => {
         <h1 style={{ fontSize: isMobile ? "1.6rem" : "2.2rem", fontWeight: 700, margin: 0 }}>
           Built For <span style={{ color: "#285A48" }}>Every Grower</span>
         </h1>
-        
       </div>
 
       <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
@@ -130,12 +127,12 @@ const VideoPage = () => {
         {/* ════ DESKTOP layout ════ */}
         {!isMobile && (
           <>
-            {/* Carousel */}
+            {/* Carousel — reduced height from 620px to 480px */}
             <div style={{
               display: "flex",
               gap: "1rem",
               alignItems: "stretch",
-              height: "620px",
+              height: "480px",
               overflow: "hidden",
               borderRadius: "1.25rem",
             }}>
@@ -255,8 +252,15 @@ const VideoPage = () => {
         {/* ════ MOBILE layout ════ */}
         {isMobile && (
           <>
-            {/* Active video — full width */}
-            <div style={{ borderRadius: "1.25rem", overflow: "hidden", position: "relative", width: "100%", aspectRatio: "9/16", maxHeight: "75vh" }}>
+            {/* Active video — reduced from 75vh to 55vh */}
+            <div style={{
+              borderRadius: "1.25rem",
+              overflow: "hidden",
+              position: "relative",
+              width: "100%",
+              aspectRatio: "9/16",
+              maxHeight: "55vh",
+            }}>
               <video
                 ref={videoRefs.current[active]}
                 autoPlay loop muted playsInline
@@ -292,7 +296,7 @@ const VideoPage = () => {
               </div>
             </div>
 
-            {/* Thumbnail strip */}
+            {/* Thumbnail strip — reduced from 72x96 to 58x78 */}
             <div style={{ display: "flex", gap: "0.6rem", marginTop: "0.75rem", overflowX: "auto", paddingBottom: "4px", scrollbarWidth: "none" }}>
               {VIDEOS.map((video, i) => (
                 <div
@@ -300,8 +304,8 @@ const VideoPage = () => {
                   onClick={() => setActive(i)}
                   style={{
                     flexShrink: 0,
-                    width: "72px",
-                    height: "96px",
+                    width: "58px",
+                    height: "78px",
                     borderRadius: "0.75rem",
                     overflow: "hidden",
                     position: "relative",
