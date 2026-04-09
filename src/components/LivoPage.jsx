@@ -40,6 +40,18 @@ const useReveal = () => {
   return { ref, visible };
 };
 
+const useIsMobile = () => {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  return isMobile;
+};
+
 const TAB_CONTENT = [
   {
     label: "Partner In Field",
@@ -94,7 +106,7 @@ const TAB_CONTENT = [
     cta: "Scan Now →",
   },
   {
-    label: "Note Your Activities",
+    label: "Plan Your Activities",
     icon: noteIcon,
     slides: [{ img: ActionPlanning4 }],
     heading: "Plan Every Step Right",
@@ -126,24 +138,16 @@ const Carousel = ({ slides }) => {
       overflow: "hidden",
     }}>
       {slides.map((slide, i) => (
-        <div
-          key={i}
-          style={{
-            position: "absolute",
-            inset: 0,
-            opacity: i === current ? 1 : 0,
-            transition: "opacity 0.7s ease",
-          }}
-        >
+        <div key={i} style={{
+          position: "absolute",
+          inset: 0,
+          opacity: i === current ? 1 : 0,
+          transition: "opacity 0.7s ease",
+        }}>
           <img
             src={slide.img}
             alt={`Slide ${i + 1}`}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-              display: "block",
-            }}
+            style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
           />
         </div>
       ))}
@@ -153,45 +157,87 @@ const Carousel = ({ slides }) => {
 
 const LivoPage = () => {
   const headingReveal = useReveal();
+  const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState(0);
   const [show, setShow] = useState(true);
+  const autoPlayRef = useRef(null);
   const content = TAB_CONTENT[activeTab];
 
-  const handleTab = (i) => {
+  const switchTab = (i) => {
     setShow(false);
     setTimeout(() => { setActiveTab(i); setShow(true); }, 80);
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 px-4 py-10">
+  // Auto-advance every 3 seconds
+  const startAutoPlay = () => {
+    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    autoPlayRef.current = setInterval(() => {
+      setShow(false);
+      setTimeout(() => {
+        setActiveTab(prev => (prev + 1) % TAB_CONTENT.length);
+        setShow(true);
+      }, 80);
+    }, 3000);
+  };
 
-      {/* Heading */}
+  useEffect(() => {
+    startAutoPlay();
+    return () => clearInterval(autoPlayRef.current);
+  }, []);
+
+  // Manual tab click — restart timer
+  const handleTab = (i) => {
+    switchTab(i);
+    startAutoPlay();
+  };
+
+  return (
+    <div style={{ background: "#f9fafb", padding: isMobile ? "32px 16px 40px" : "40px 0 60px" }}>
+      <style>{`
+        @keyframes tabProgress {
+          from { width: 0%; }
+          to   { width: 100%; }
+        }
+      `}</style>
+
+      {/* ── Heading ── */}
       <div
         ref={headingReveal.ref}
-        className={`flex justify-center mb-8 transition-all duration-700 ${
-          headingReveal.visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
-        }`}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: isMobile ? "24px" : "32px",
+          transition: "opacity 0.7s ease, transform 0.7s ease",
+          opacity: headingReveal.visible ? 1 : 0,
+          transform: headingReveal.visible ? "translateY(0)" : "translateY(-24px)",
+        }}
       >
-        <h2 style={{ fontSize: "2.2rem", fontWeight: 700, textAlign: "center", margin: 0 }}>
+        <h2 style={{
+          fontSize: isMobile ? "1.6rem" : "2.2rem",
+          fontWeight: 700,
+          textAlign: "center",
+          margin: 0,
+        }}>
           Livo Makes it{" "}
           <span style={{ color: "#285A48" }}>Effortless</span>
         </h2>
       </div>
 
-      {/* Constrained wrapper */}
-      <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+      {/* ── Constrained wrapper ── */}
+      <div style={{ maxWidth: isMobile ? "100%" : "100%", margin: "0 auto" }}>
 
-        {/* Tabs */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "nowrap",
-            gap: "12px",
-            justifyContent: "center",
-            overflowX: "auto",
-            paddingBottom: "4px",
-          }}
-        >
+        {/* ── Tabs ── */}
+        <div style={{
+          display: "flex",
+          flexWrap: isMobile ? "nowrap" : "wrap",
+          gap: isMobile ? "8px" : "12px",
+          justifyContent: isMobile ? "flex-start" : "center",
+          overflowX: isMobile ? "auto" : "visible",
+          paddingBottom: isMobile ? "8px" : "4px",
+          /* Hide scrollbar on mobile for cleaner look */
+          msOverflowStyle: "none",
+          scrollbarWidth: "none",
+        }}>
           {TAB_CONTENT.map((tab, index) => (
             <button
               key={index}
@@ -200,9 +246,9 @@ const LivoPage = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: "6px",
-                padding: "12px 22px",
+                padding: isMobile ? "9px 14px" : "12px 22px",
                 borderRadius: "14px",
-                fontSize: "0.92rem",
+                fontSize: isMobile ? "0.8rem" : "0.92rem",
                 fontWeight: 500,
                 whiteSpace: "nowrap",
                 cursor: "pointer",
@@ -212,14 +258,28 @@ const LivoPage = () => {
                 background: activeTab === index ? "#285A48" : "#DDE5E2",
                 color: activeTab === index ? "white" : "#6b7280",
                 boxShadow: activeTab === index ? "0 2px 8px rgba(40,90,72,0.25)" : "none",
+                position: "relative",
+                overflow: "hidden",
               }}
             >
+              {/* Progress bar at bottom of active tab */}
+              {activeTab === index && (
+                <span key={activeTab} style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  height: "3px",
+                  background: "rgba(255,255,255,0.6)",
+                  borderRadius: "0 0 14px 14px",
+                  animation: "tabProgress 3s linear forwards",
+                }} />
+              )}
               <img
                 src={tab.icon}
                 alt={tab.label}
                 style={{
-                  width: 20,
-                  height: 20,
+                  width: isMobile ? 16 : 20,
+                  height: isMobile ? 16 : 20,
                   objectFit: "contain",
                   filter: activeTab === index ? "brightness(0) invert(1)" : "opacity(0.5)",
                 }}
@@ -229,48 +289,50 @@ const LivoPage = () => {
           ))}
         </div>
 
-        {/* Card */}
+        {/* ── Card ── */}
         <div
           style={{
             background: "white",
             borderRadius: "1.5rem",
             boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-            padding: "1rem",
+            padding: isMobile ? "1.25rem 1rem" : "0.4rem 0.5rem",
             marginTop: "1rem",
             display: "flex",
-            flexDirection: "row",
+            /* Stack vertically on mobile, side-by-side on desktop */
+            flexDirection: isMobile ? "column" : "row",
             alignItems: "center",
-            minHeight: "440px",
+            minHeight: isMobile ? "auto" : "560px",
             transition: "opacity 0.5s ease, transform 0.5s ease",
             opacity: show ? 1 : 0,
             transform: show ? "translateY(0)" : "translateY(1rem)",
+            gap: isMobile ? "1.25rem" : 0,
           }}
         >
-          {/* LEFT — image */}
+          {/* LEFT / TOP — image */}
           <div style={{
-            width: "55%",
+            width: isMobile ? "100%" : "55%",
             flexShrink: 0,
-            height: "420px",
-            padding: "0.25rem",
+            height: isMobile ? "260px" : "520px",
+            padding: 0,
           }}>
             <Carousel slides={content.slides} />
           </div>
 
-          {/* RIGHT — content */}
-          <div
-            style={{
-              width: "45%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              textAlign: "center",
-              padding: "1rem 1.25rem",
-              gap: "1.75rem",
-            }}
-          >
+          {/* RIGHT / BOTTOM — content */}
+          <div style={{
+            width: isMobile ? "100%" : "45%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            padding: isMobile ? "0 0.5rem 0.5rem" : "0.4rem 0.75rem",
+            gap: isMobile ? "1.1rem" : "1.75rem",
+          }}>
+
+            {/* Heading */}
             <h2 style={{
-              fontSize: "1.9rem",
+              fontSize: isMobile ? "1.4rem" : "2.3rem",
               fontWeight: 700,
               margin: 0,
               lineHeight: 1.2,
@@ -281,10 +343,11 @@ const LivoPage = () => {
               </span>
             </h2>
 
+            {/* Description */}
             <p style={{
               color: "#6b7280",
-              maxWidth: "26rem",
-              fontSize: "0.95rem",
+              maxWidth: isMobile ? "26rem" : "32rem",
+              fontSize: isMobile ? "0.85rem" : "1.05rem",
               lineHeight: 1.6,
               margin: 0,
             }}>
@@ -295,7 +358,9 @@ const LivoPage = () => {
             <div style={{
               display: "flex",
               alignItems: "flex-start",
-              gap: "1.6rem",
+              gap: isMobile ? "0.9rem" : "1.6rem",
+              justifyContent: "center",
+              flexWrap: "nowrap",
             }}>
               {content.steps.map((step, index) => (
                 <React.Fragment key={index}>
@@ -303,14 +368,14 @@ const LivoPage = () => {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    gap: "0.9rem",
-                    width: "80px",
+                    gap: isMobile ? "0.6rem" : "0.9rem",
+                    width: isMobile ? "64px" : "96px",
                   }}>
                     <div
                       style={{
                         background: "#285A48",
-                        width: 68,
-                        height: 68,
+                        width: isMobile ? 54 : 80,
+                        height: isMobile ? 54 : 80,
                         borderRadius: "50%",
                         display: "flex",
                         alignItems: "center",
@@ -326,11 +391,15 @@ const LivoPage = () => {
                       <img
                         src={step.img}
                         alt={step.title}
-                        style={{ width: 60, height: 60, objectFit: "contain" }}
+                        style={{
+                          width: isMobile ? 46 : 68,
+                          height: isMobile ? 46 : 68,
+                          objectFit: "contain",
+                        }}
                       />
                     </div>
                     <p style={{
-                      fontSize: "0.78rem",
+                      fontSize: isMobile ? "0.68rem" : "0.88rem",
                       color: "#4b5563",
                       fontWeight: 500,
                       lineHeight: 1.3,
@@ -345,9 +414,9 @@ const LivoPage = () => {
                   {index < content.steps.length - 1 && (
                     <span style={{
                       color: "#9ca3af",
-                      fontSize: "1.1rem",
+                      fontSize: isMobile ? "0.9rem" : "1.1rem",
                       fontWeight: 700,
-                      marginTop: "20px",
+                      marginTop: isMobile ? "14px" : "20px",
                       flexShrink: 0,
                     }}>
                       »
@@ -363,9 +432,9 @@ const LivoPage = () => {
                 border: "2px solid #15803d",
                 color: "#15803d",
                 background: "transparent",
-                padding: "0.65rem 2rem",
+                padding: isMobile ? "0.55rem 1.6rem" : "0.75rem 2.4rem",
                 borderRadius: "9999px",
-                fontSize: "0.95rem",
+                fontSize: isMobile ? "0.85rem" : "1.05rem",
                 fontWeight: 600,
                 cursor: "pointer",
                 transition: "background 0.2s, color 0.2s",
