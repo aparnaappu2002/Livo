@@ -168,7 +168,6 @@ const LivoPage = () => {
     setTimeout(() => { setActiveTab(i); setShow(true); }, 80);
   };
 
-  // Auto-advance every 3 seconds
   const startAutoPlay = () => {
     if (autoPlayRef.current) clearInterval(autoPlayRef.current);
     autoPlayRef.current = setInterval(() => {
@@ -185,14 +184,17 @@ const LivoPage = () => {
     return () => clearInterval(autoPlayRef.current);
   }, []);
 
-  // Manual tab click — restart timer
   const handleTab = (i) => {
     switchTab(i);
     startAutoPlay();
   };
 
+  /* ── padding: equal on all 4 sides ── */
+  const OUTER_PAD = isMobile ? "32px 24px" : "48px 24px";
+  const CARD_PAD  = isMobile ? "20px"       : "24px";
+
   return (
-    <div style={{ background: "#f9fafb", padding: isMobile ? "32px 16px 40px" : "40px 0 60px" }}>
+    <div style={{ background: "#f0f4f2", padding: OUTER_PAD }}>
       <style>{`
         @keyframes tabProgress {
           from { width: 0%; }
@@ -206,7 +208,7 @@ const LivoPage = () => {
         style={{
           display: "flex",
           justifyContent: "center",
-          marginBottom: isMobile ? "24px" : "32px",
+          marginBottom: isMobile ? "24px" : "28px",
           transition: "opacity 0.7s ease, transform 0.7s ease",
           opacity: headingReveal.visible ? 1 : 0,
           transform: headingReveal.visible ? "translateY(0)" : "translateY(-24px)",
@@ -223,20 +225,20 @@ const LivoPage = () => {
         </h2>
       </div>
 
-      {/* ── Constrained wrapper ── */}
-      <div style={{ maxWidth: isMobile ? "100%" : "100%", margin: "0 auto" }}>
+      {/* ── Constrained wrapper — caps width on large screens ── */}
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
 
         {/* ── Tabs ── */}
         <div style={{
           display: "flex",
           flexWrap: isMobile ? "nowrap" : "wrap",
-          gap: isMobile ? "8px" : "12px",
+          gap: isMobile ? "8px" : "10px",
           justifyContent: isMobile ? "flex-start" : "center",
           overflowX: isMobile ? "auto" : "visible",
-          paddingBottom: isMobile ? "8px" : "4px",
-          /* Hide scrollbar on mobile for cleaner look */
+          paddingBottom: isMobile ? "8px" : "0",
           msOverflowStyle: "none",
           scrollbarWidth: "none",
+          marginBottom: "16px",
         }}>
           {TAB_CONTENT.map((tab, index) => (
             <button
@@ -246,9 +248,9 @@ const LivoPage = () => {
                 display: "flex",
                 alignItems: "center",
                 gap: "6px",
-                padding: isMobile ? "9px 14px" : "12px 22px",
-                borderRadius: "14px",
-                fontSize: isMobile ? "0.8rem" : "0.92rem",
+                padding: isMobile ? "9px 14px" : "10px 20px",
+                borderRadius: "12px",
+                fontSize: isMobile ? "0.8rem" : "0.88rem",
                 fontWeight: 500,
                 whiteSpace: "nowrap",
                 cursor: "pointer",
@@ -262,7 +264,6 @@ const LivoPage = () => {
                 overflow: "hidden",
               }}
             >
-              {/* Progress bar at bottom of active tab */}
               {activeTab === index && (
                 <span key={activeTab} style={{
                   position: "absolute",
@@ -270,7 +271,7 @@ const LivoPage = () => {
                   left: 0,
                   height: "3px",
                   background: "rgba(255,255,255,0.6)",
-                  borderRadius: "0 0 14px 14px",
+                  borderRadius: "0",
                   animation: "tabProgress 3s linear forwards",
                 }} />
               )}
@@ -278,8 +279,8 @@ const LivoPage = () => {
                 src={tab.icon}
                 alt={tab.label}
                 style={{
-                  width: isMobile ? 16 : 20,
-                  height: isMobile ? 16 : 20,
+                  width: isMobile ? 16 : 18,
+                  height: isMobile ? 16 : 18,
                   objectFit: "contain",
                   filter: activeTab === index ? "brightness(0) invert(1)" : "opacity(0.5)",
                 }}
@@ -293,46 +294,46 @@ const LivoPage = () => {
         <div
           style={{
             background: "white",
-            borderRadius: "1.5rem",
-            boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-            padding: isMobile ? "1.25rem 1rem" : "0.4rem 0.5rem",
-            marginTop: "1rem",
+            borderRadius: "20px",
+            boxShadow: "0 4px 20px rgba(0,0,0,0.07)",
+            /* FIX: equal padding on all 4 sides */
+            padding: CARD_PAD,
             display: "flex",
-            /* Stack vertically on mobile, side-by-side on desktop */
             flexDirection: isMobile ? "column" : "row",
             alignItems: "center",
-            minHeight: isMobile ? "auto" : "560px",
+            gap: isMobile ? "20px" : "28px",
             transition: "opacity 0.5s ease, transform 0.5s ease",
             opacity: show ? 1 : 0,
             transform: show ? "translateY(0)" : "translateY(1rem)",
-            gap: isMobile ? "1.25rem" : 0,
           }}
         >
-          {/* LEFT / TOP — image */}
+          {/* LEFT — image, fixed height so both sides are equal */}
           <div style={{
-            width: isMobile ? "100%" : "55%",
+            width: isMobile ? "100%" : "50%",
             flexShrink: 0,
-            height: isMobile ? "260px" : "520px",
-            padding: 0,
+            height: isMobile ? "260px" : "360px",
+            borderRadius: "14px",
+            overflow: "hidden",
+            background: "#e8f2ee",
           }}>
             <Carousel slides={content.slides} />
           </div>
 
-          {/* RIGHT / BOTTOM — content */}
+          {/* RIGHT — content, same width so it fills the other 50% */}
           <div style={{
-            width: isMobile ? "100%" : "45%",
+            width: isMobile ? "100%" : "50%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             textAlign: "center",
-            padding: isMobile ? "0 0.5rem 0.5rem" : "0.4rem 0.75rem",
-            gap: isMobile ? "1.1rem" : "1.75rem",
+            gap: isMobile ? "16px" : "20px",
+            /* no extra padding here — the card padding handles it uniformly */
           }}>
 
             {/* Heading */}
             <h2 style={{
-              fontSize: isMobile ? "1.4rem" : "2.3rem",
+              fontSize: isMobile ? "1.4rem" : "1.85rem",
               fontWeight: 700,
               margin: 0,
               lineHeight: 1.2,
@@ -347,8 +348,8 @@ const LivoPage = () => {
             <p style={{
               color: "#6b7280",
               maxWidth: isMobile ? "26rem" : "32rem",
-              fontSize: isMobile ? "0.85rem" : "1.05rem",
-              lineHeight: 1.6,
+              fontSize: isMobile ? "0.85rem" : "0.93rem",
+              lineHeight: 1.65,
               margin: 0,
             }}>
               "{content.description}"
@@ -358,7 +359,7 @@ const LivoPage = () => {
             <div style={{
               display: "flex",
               alignItems: "flex-start",
-              gap: isMobile ? "0.9rem" : "1.6rem",
+              gap: isMobile ? "12px" : "20px",
               justifyContent: "center",
               flexWrap: "nowrap",
             }}>
@@ -368,14 +369,14 @@ const LivoPage = () => {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    gap: isMobile ? "0.6rem" : "0.9rem",
-                    width: isMobile ? "64px" : "96px",
+                    gap: isMobile ? "8px" : "10px",
+                    width: isMobile ? "68px" : "90px",
                   }}>
                     <div
                       style={{
                         background: "#285A48",
-                        width: isMobile ? 54 : 80,
-                        height: isMobile ? 54 : 80,
+                        width: isMobile ? 56 : 72,
+                        height: isMobile ? 56 : 72,
                         borderRadius: "50%",
                         display: "flex",
                         alignItems: "center",
@@ -385,21 +386,21 @@ const LivoPage = () => {
                         transition: "transform 0.2s",
                         flexShrink: 0,
                       }}
-                      onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
+                      onMouseEnter={e => e.currentTarget.style.transform = "scale(1.08)"}
                       onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
                     >
                       <img
                         src={step.img}
                         alt={step.title}
                         style={{
-                          width: isMobile ? 46 : 68,
-                          height: isMobile ? 46 : 68,
+                          width: isMobile ? 48 : 60,
+                          height: isMobile ? 48 : 60,
                           objectFit: "contain",
                         }}
                       />
                     </div>
                     <p style={{
-                      fontSize: isMobile ? "0.68rem" : "0.88rem",
+                      fontSize: isMobile ? "0.7rem" : "0.8rem",
                       color: "#4b5563",
                       fontWeight: 500,
                       lineHeight: 1.3,
@@ -416,7 +417,7 @@ const LivoPage = () => {
                       color: "#9ca3af",
                       fontSize: isMobile ? "0.9rem" : "1.1rem",
                       fontWeight: 700,
-                      marginTop: isMobile ? "14px" : "20px",
+                      marginTop: isMobile ? "16px" : "20px",
                       flexShrink: 0,
                     }}>
                       »
@@ -432,9 +433,9 @@ const LivoPage = () => {
                 border: "2px solid #15803d",
                 color: "#15803d",
                 background: "transparent",
-                padding: isMobile ? "0.55rem 1.6rem" : "0.75rem 2.4rem",
+                padding: isMobile ? "8px 24px" : "10px 28px",
                 borderRadius: "9999px",
-                fontSize: isMobile ? "0.85rem" : "1.05rem",
+                fontSize: isMobile ? "0.85rem" : "0.93rem",
                 fontWeight: 600,
                 cursor: "pointer",
                 transition: "background 0.2s, color 0.2s",
