@@ -11,20 +11,31 @@ import wheat from "../assets/wheat.png";
 import fadewheat from "../assets/Frame 2147211020.png";
 import chilli from "../assets/Frame 2147210967.png";
 import fadechilli from "../assets/Frame 2147210977.png";
-import revinLogo from "../assets/logo 2.png";
+import revinLogo from "../assets/logo 3.png";
 import whiteApple from "../assets/white_appstore.png";
 import whitePlaystore from "../assets/white_playstore.png";
 
 /* ─── Wave Text ─────────────────────────────────────────── */
+// FIX: Never mix animation shorthand + animationDelay longhand on the same
+// element — React diffs them independently and throws a conflict warning on
+// re-render. Solution: use ONLY longhands (never the shorthand `animation`).
 const WaveText = ({ text, isActive }) => (
   <span aria-label={text} style={{ display: "inline-block" }}>
     {text.split("").map((char, i) => (
-      <span key={i} style={{
-        display: "inline-block",
-        animation: isActive ? "waveLetter 1.6s ease-in-out 1" : "none",
-        animationDelay: `${i * 0.07}s`,
-        whiteSpace: char === " " ? "pre" : "normal",
-      }}>
+      <span
+        key={i}
+        style={{
+          display: "inline-block",
+          // ✅ All longhands — no shorthand `animation` property at all
+          animationName:            isActive ? "waveLetter" : "none",
+          animationDuration:        "1.6s",
+          animationTimingFunction:  "ease-in-out",
+          animationIterationCount:  1,
+          animationFillMode:        "both",
+          animationDelay:           `${i * 0.07}s`,
+          whiteSpace: char === " " ? "pre" : "normal",
+        }}
+      >
         {char}
       </span>
     ))}
@@ -129,37 +140,30 @@ const Hero = () => {
       {/* ════ NAVBAR ════ */}
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0,
-        width: "100vw",
-        zIndex: 100,
+        width: "100vw", zIndex: 100,
         background: "#fff",
         boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
       }}>
         <div style={{
-          width: "100%",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          height: 60,
-          padding: "0 16px",
+          width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
+          height: 60, padding: "0 16px",
         }}>
-          {/* Logo */}
           <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0, minWidth: 0 }}>
             <img src={logoIcon} alt="icon" style={{ width: 30, height: 30, objectFit: "contain", flexShrink: 0 }} />
             <img src={livoLogo} alt="LIVO" style={{ height: 22, objectFit: "contain", flexShrink: 0 }} />
           </div>
 
-          {/* Desktop links */}
           {!isMobile && (
             <ul style={{ display: "flex", gap: 32, listStyle: "none", margin: 0, padding: 0 }}>
               {navLinks.map((link, i) => <NavLink key={link} label={link} active={i === 0} />)}
             </ul>
           )}
 
-          {/* Desktop download */}
           {!isMobile && <DownloadButton fullWidth={false} />}
 
-          {/* Mobile hamburger */}
           {isMobile && (
             <button
-              onClick={() => setMenuOpen(function(p) { return !p; })}
+              onClick={() => setMenuOpen(p => !p)}
               style={{ background: "none", border: "none", cursor: "pointer", padding: 6, flexShrink: 0 }}
               aria-label="Toggle menu"
             >
@@ -168,15 +172,12 @@ const Hero = () => {
           )}
         </div>
 
-        {/* Mobile dropdown */}
         <div style={{
-          width: "100%",
-          overflow: "hidden",
+          width: "100%", overflow: "hidden",
           maxHeight: menuOpen ? 280 : 0,
           opacity: menuOpen ? 1 : 0,
           transition: "max-height 0.35s ease, opacity 0.25s ease",
-          background: "#fff",
-          borderTop: "1px solid #f0f0f0",
+          background: "#fff", borderTop: "1px solid #f0f0f0",
         }}>
           <div style={{ padding: "8px 16px 16px" }}>
             {navLinks.map((link, i) => (
@@ -197,21 +198,13 @@ const Hero = () => {
       </nav>
 
       {/* ════ PAGE BODY ════ */}
-      {/* FIX 2: Removed gray gradient background — now transparent/white */}
-      <div style={{
-        paddingTop: 60,
-        minHeight: "100vh",
-        width: "100vw",
-        overflowX: "hidden",
-      }}>
+      <div style={{ paddingTop: 60, minHeight: "100vh", width: "100vw", overflowX: "hidden" }}>
 
         {/* ════ DESKTOP ════ */}
         {!isMobile && (
           <>
-            {/* FIX 1: Increased height so there's more gap between text and bottom images */}
             <div style={{ position: "relative", height: "clamp(600px,82vh,900px)", overflow: "hidden" }}>
 
-              {/* Centred tagline */}
               <div style={{ position: "absolute", top: "clamp(80px,14vh,160px)", left: 0, right: 0, display: "flex", justifyContent: "center", alignItems: "flex-start", height: 200, overflow: "hidden", zIndex: 10 }}>
                 <div style={logoStyle}>
                   <img src={logoIcon} alt="" style={{ height: 130, objectFit: "contain" }} />
@@ -269,14 +262,10 @@ const Hero = () => {
                 </div>
               </div>
 
-              {/* Drone */}
               <img src={whisk} alt="drone" style={{ position: "absolute", bottom: "clamp(60px,10vh,100px)", right: "clamp(16px,3vw,48px)", height: "clamp(120px,18vh,260px)", objectFit: "contain", zIndex: 5 }} />
-
-              {/* Farmer */}
               <img src={farmer} alt="farmer" style={{ position: "absolute", left: "clamp(16px,3vw,48px)", bottom: -30, height: "clamp(200px,40vh,480px)", width: "auto", objectFit: "contain", objectPosition: "bottom", zIndex: 20, pointerEvents: "none" }} />
             </div>
 
-            {/* Desktop ground — no wrapping div, no gray background */}
             <img src={green} alt="" style={{ width: "100%", display: "block" }} />
             <img src={brown} alt="" style={{ width: "100%", maxHeight: 80, objectFit: "cover", display: "block" }} />
           </>
@@ -286,14 +275,11 @@ const Hero = () => {
         {isMobile && (
           <div style={{ position: "relative", width: "100%", height: "calc(100vh - 60px)", overflow: "hidden" }}>
 
-            {/* ── Text: top-centre ── */}
             <div style={{ position: "absolute", top: 200, left: 0, right: 0, display: "flex", justifyContent: "center", alignItems: "flex-start", height: 220, overflow: "hidden", zIndex: 10 }}>
-              {/* Animated logo */}
               <div style={logoStyle}>
                 <img src={logoIcon} alt="" style={{ height: 60, objectFit: "contain" }} />
                 <img src={livoLogo} alt="LIVO" style={{ height: 44, objectFit: "contain" }} />
               </div>
-              {/* Animated tagline */}
               <div style={tagStyle}>
                 <p style={{ fontSize: "clamp(26px,7.5vw,38px)", fontWeight: 400, color: "#134e4a", lineHeight: 1.2 }}>
                   <WaveText text="INDIA'S #1 " isActive={phase === "text"} />
@@ -314,91 +300,32 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* ── Ground strip: anchored to bottom ── */}
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 1 }}>
               <img src={green} alt="" style={{ width: "100%", display: "block" }} />
               <img src={brown} alt="" style={{ width: "100%", maxHeight: 50, objectFit: "cover", display: "block" }} />
             </div>
 
-            {/* ── Wheat: left 25% ── */}
-            <div style={{
-              position: "absolute",
-              bottom: 50,
-              left: 0,
-              width: "25%",
-              display: "flex",
-              alignItems: "flex-end",
-              justifyContent: "flex-start",
-              zIndex: 3,
-              overflow: "hidden",
-            }}>
+            <div style={{ position: "absolute", bottom: 50, left: 0, width: "25%", display: "flex", alignItems: "flex-end", justifyContent: "flex-start", zIndex: 3, overflow: "hidden" }}>
               {Array.from({ length: 4 }).map((_, i) => (
-                <img key={i} src={i % 2 === 0 ? wheat : fadewheat} alt=""
-                  style={{ height: 90, objectFit: "contain", marginLeft: -4, flexShrink: 0 }} />
+                <img key={i} src={i % 2 === 0 ? wheat : fadewheat} alt="" style={{ height: 90, objectFit: "contain", marginLeft: -4, flexShrink: 0 }} />
               ))}
             </div>
 
-            {/* ── Plants: middle 50% ── */}
-            <div style={{
-              position: "absolute",
-              bottom: 50,
-              left: "25%",
-              width: "50%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "flex-end",
-              zIndex: 2,
-              overflow: "hidden",
-            }}>
+            <div style={{ position: "absolute", bottom: 50, left: "25%", width: "50%", display: "flex", justifyContent: "center", alignItems: "flex-end", zIndex: 2, overflow: "hidden" }}>
               {Array.from({ length: 6 }).map((_, i) => (
-                <img key={i} src={i % 2 === 0 ? plant : fadeplant} alt=""
-                  style={{ height: 100, objectFit: "contain", flexShrink: 0 }} />
+                <img key={i} src={i % 2 === 0 ? plant : fadeplant} alt="" style={{ height: 100, objectFit: "contain", flexShrink: 0 }} />
               ))}
             </div>
 
-            {/* ── Chilli: right 25% ── */}
-            <div style={{
-              position: "absolute",
-              bottom: 50,
-              right: 0,
-              width: "25%",
-              display: "flex",
-              alignItems: "flex-end",
-              justifyContent: "flex-end",
-              zIndex: 3,
-              overflow: "hidden",
-            }}>
+            <div style={{ position: "absolute", bottom: 50, right: 0, width: "25%", display: "flex", alignItems: "flex-end", justifyContent: "flex-end", zIndex: 3, overflow: "hidden" }}>
               {Array.from({ length: 4 }).map((_, i) => (
-                <img key={i} src={i % 2 === 0 ? chilli : fadechilli} alt=""
-                  style={{ height: 90, objectFit: "contain", marginLeft: -4, flexShrink: 0 }} />
+                <img key={i} src={i % 2 === 0 ? chilli : fadechilli} alt="" style={{ height: 90, objectFit: "contain", marginLeft: -4, flexShrink: 0 }} />
               ))}
             </div>
 
-            {/* ── Farmer: bottom-left, in front of plants ── */}
-            <img src={farmer} alt="farmer" style={{
-              position: "absolute",
-              bottom: 20,
-              left: -10,
-              height: "clamp(160px, 32vh, 260px)",
-              width: "auto",
-              objectFit: "contain",
-              objectPosition: "bottom",
-              zIndex: 5,
-              pointerEvents: "none",
-            }} />
+            <img src={farmer} alt="farmer" style={{ position: "absolute", bottom: 20, left: -10, height: "clamp(160px, 32vh, 260px)", width: "auto", objectFit: "contain", objectPosition: "bottom", zIndex: 5, pointerEvents: "none" }} />
 
-            {/* ── Drone: top-right corner ── */}
-            <img src={whisk} alt="drone" style={{
-              position: "absolute",
-              top: "clamp(550px, 100vh, 400px)",
-              right: 8,
-              height: "clamp(70px, 14vw, 110px)",
-              width: "auto",
-              objectFit: "contain",
-              zIndex: 4,
-              pointerEvents: "none",
-            }} />
-
+            <img src={whisk} alt="drone" style={{ position: "absolute", top: "clamp(550px, 100vh, 400px)", right: 8, height: "clamp(70px, 14vw, 110px)", width: "auto", objectFit: "contain", zIndex: 4, pointerEvents: "none" }} />
           </div>
         )}
 
