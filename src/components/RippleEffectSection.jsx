@@ -361,11 +361,7 @@ const RippleEffectSection = () => {
           </p>
         </div>
 
-        {/*
-          P9 — SavingsPage cards rise from bottom.
-          The heading above stays pinned at top (zIndex 50).
-          This container holds ONLY the calculator grid (no heading).
-        */}
+        
         <div
           ref={savingsRevealRef}
           style={{

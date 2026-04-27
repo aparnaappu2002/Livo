@@ -124,9 +124,7 @@ export default function LivoLanding() {
             </ul>
           </div>
 
-          {/* RIGHT — illustration shifted left, device overlaps right edge */}
-          {/* RIGHT — illustration fully visible, bottom-aligned */}
-              {/* RIGHT — absolutely positioned so full image is always visible */}
+          
 <div style={{ width: "clamp(320px, 42%, 500px)", flexShrink: 0 }} />
 
 {/* Full illustration — positioned absolute to the card */}

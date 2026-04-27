@@ -15,10 +15,7 @@ import revinLogo from "../assets/logo 3.png";
 import whiteApple from "../assets/white_appstore.png";
 import whitePlaystore from "../assets/white_playstore.png";
 
-/* ─── Wave Text ─────────────────────────────────────────── */
-// FIX: Never mix animation shorthand + animationDelay longhand on the same
-// element — React diffs them independently and throws a conflict warning on
-// re-render. Solution: use ONLY longhands (never the shorthand `animation`).
+
 const WaveText = ({ text, isActive }) => (
   <span aria-label={text} style={{ display: "inline-block" }}>
     {text.split("").map((char, i) => (
